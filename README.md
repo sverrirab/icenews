@@ -6,7 +6,7 @@ icelandic news text - headlines and such.  This is used for example
 by [helst.is](https://helst.is) for processing mainstream Icelandic 
 news media.  
 
-![travis](https://travis-ci.com/sverrirab/icenews.svg?token=xxFqtztRjZQMvihBaiGq&branch=master)
+[![travis](https://travis-ci.com/sverrirab/icenews.svg?token=xxFqtztRjZQMvihBaiGq&branch=master)](https://travis-ci.com/sverrirab/icenews)
 
 # How to use
 
