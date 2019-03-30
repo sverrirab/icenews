@@ -1,9 +1,10 @@
 from os import path
 from setuptools import setup
 
+VERSION = '1.0.2'
 README = 'README.md'
 REQUIREMENTS = 'requirements.txt'
-PACKAGE_DATA = [README, REQUIREMENTS, 'LICENSE']
+PACKAGE_DATA = [README, 'LICENSE']
 
 here = path.abspath(path.dirname(__file__))
 with open(path.join(here, README), encoding='utf-8') as f:
@@ -18,7 +19,7 @@ with open(path.join(here, REQUIREMENTS)) as f:
 
 setup(
     name='icenews',
-    version='1.0.1',
+    version=VERSION,
     description='Simple NLP for Icelandic News',
     url='https://github.com/sverrirab/icenews',
     author='Sverrir A. Berg',
