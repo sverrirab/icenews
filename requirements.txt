@@ -1,0 +1,4 @@
+Flask==1.0.2
+Flask-RESTful==0.3.7
+tokenizer==1.2.1
+reynir==1.5.1
