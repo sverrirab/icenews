@@ -1,12 +1,12 @@
 dist: xenial
 language: python
-python:
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-install:
-  - pip install -r requirements.txt
-virtualenv:
-  system_site_packages: true
+jobs:
+  include:
+    - python: '3.5'
+    - python: '3.6'
+    - python: '3.7'
+    - python: pypy3.5-5.10.1
+    - python: nightly
 script: pytest
+matrix:
+  fast_finish: true
