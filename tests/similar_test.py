@@ -79,6 +79,8 @@ Hvetja ætti til opinnar umræðu um byggingu þjóðarleikvangs á grundvelli �
 
 
 class TestSimilar(unittest.TestCase):
+    def assertSameWords(self, a, b):
+        self.assertSequenceEqual(sorted(a), sorted(b))
 
     def test_almost(self):
         self.assertTrue(_almost(10, 12, 14))
@@ -109,11 +111,11 @@ class TestSimilar(unittest.TestCase):
         pass
 
     def test_similar(self):
-        self.assertEqual(["Baldur", "Konni", "sýning"], important_words("Baldur og Konni með sýningu"))
-        self.assertEqual(["Baldur", "Konni", "sýning"], important_words("", "Baldur og Konni með sýningu"))
-        self.assertEqual(['Álrisi', 'hönd', 'vandi', 'vanda', 'vandur', 'venja'],
+        self.assertSameWords(["Baldur", "Konni", "sýning"], important_words("Baldur og Konni með sýningu"))
+        self.assertSameWords(["Baldur", "Konni", "sýning"], important_words("", "Baldur og Konni með sýningu"))
+        self.assertSameWords(['Álrisi', 'hönd', 'vandi', 'vanda', 'vandur', 'venja'],
                          important_words("Álrisi í vanda", "Vandi að höndum"))
-        self.assertEqual(["einn", "tveir", "þrír"], important_words("Einn, tveir og þrír"))
+        self.assertSameWords(["einn", "tveir", "þrír"], important_words("Einn, tveir og þrír"))
 
     def test_examples(self):
         self.assertTrue(similar_article_wordlists(
