@@ -1,7 +1,9 @@
+import argparse
+
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 
-from icenews.nlp import parse_ins
+from .similar import important_words
 
 _MAX_LENGTH = 2000
 
@@ -19,12 +21,24 @@ class ParseV1(Resource):
             abort(400, message='Missing \'in\' data.')
         if len(ins) > _MAX_LENGTH:
             abort(400, message='Input too large - current maximum is {} characters.'.format(_MAX_LENGTH))
-        return parse_ins(ins), 200
+        result = {
+            'important_words': important_words(ins)
+        }
+        return result, 200
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Analyze Icelandic text with icenews")
+
+    parser.add_argument(
+        "-d", "--debug", action="store_true",
+        help="Start in debug mode")
+
+    args = parser.parse_args()
+
     api.add_resource(ParseV1, '/v1/parse')
-    app.run(debug=True)
+    app.run(debug=args.debug)
 
 
 if __name__ == '__main__':
