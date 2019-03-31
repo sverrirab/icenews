@@ -28,18 +28,19 @@ class ParseV1(Resource):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Analyze Icelandic text with icenews")
+    argparser = argparse.ArgumentParser(
+        description='Analyze Icelandic text with icenews')
 
-    parser.add_argument(
-        "-d", "--debug", action="store_true",
-        help="Start in debug mode")
+    argparser.add_argument('-b', '--bind', type=str, default='127.0.0.1', help='Address to bind to')
+    argparser.add_argument('-p', '--port', type=int, default=8000, help='Port number to use')
+    argparser.add_argument('-d', '--debug', action='store_true', help='Start in debug mode')
 
-    args = parser.parse_args()
+    args = argparser.parse_args()
 
-    api.add_resource(ParseV1, '/v1/parse')
-    app.run(debug=args.debug)
+    app.run(host=args.bind, port=args.port, debug=args.debug)
 
+
+api.add_resource(ParseV1, '/v1/parse')
 
 if __name__ == '__main__':
     main()
