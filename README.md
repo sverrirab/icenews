@@ -26,6 +26,16 @@ $ python
 {'important_words': ['greiðslukerfi', 'strætó', 'upp', 'á næstunni', 'áforma', 'áformaður', 'nýr', 'nýta']}
 ```
 
+# Use with container
+
+If you prefer you can also load the prebuilt container and run locally:
+
+```bash 
+docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
+``` 
+
+And the same request as above works...
+
 # Note on licensing
 
 This project is released under the [Apache License](./LICENSE) because
