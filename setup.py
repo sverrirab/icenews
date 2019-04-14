@@ -1,7 +1,7 @@
 from os import path
 from setuptools import setup
 
-VERSION = '1.0.3'
+VERSION = '1.0.4'
 README = 'README.md'
 REQUIREMENTS = 'requirements.txt'
 PACKAGE_DATA = [README, 'LICENSE']
