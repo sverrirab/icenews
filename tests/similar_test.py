@@ -110,6 +110,22 @@ class TestSimilar(unittest.TestCase):
         #self.assertEqual(["Trump"], important_words(NEWS_D_DESCRIPTION))
         pass
 
+    def test_important_words_more(self):
+        self.assertEqual(['EFTA', 'ESB', 'Gangar', 'ganga', 'núinn', 'núa', 'gangur', 'göng'], important_words("Göngum úr EFTA og í ESB núna!"))
+        self.assertEqual(['NBA-deild', 'fyrirtaksáhugamál', 'fylgja'], important_words("Fylgjast með NBA-Deildinni er fyrirtaksáhugamál"))
+        self.assertEqual(['http://helst.is', 'www.helst.is', 'skoða'], important_words("Skoðaðu http://helst.is eða www.Helst.is."))
+        self.assertEqual(['samkomulag', 'ná', 'fela'], important_words("Samkomulag hefur náðst. Í samkomulaginu felst."))
+        self.assertEqual(['Ásta F. Flosadóttir', 'I', 'Höfðar', 'bóndi', 'óttast'], important_words("Ásta F. Flosadóttir bóndi á Höfða I óttast."))
+        self.assertEqual(['bók', 'svanafólk', 'nýútkominn', 'nýútkoma', 'heita', 'heitur'], important_words("Í nýútkominni bók sem heitir Svanafólkið."))
+        self.assertEqual(["gangur", "ganga"], important_words("Það er ekki neitt í gangi"))
+        self.assertEqual(["þegja", "heyra"], important_words("Þegar þú þegir þá heyrist ekkert"))
+        self.assertEqual(['þjóðaröryggisráð', 'dagur', 'funda'], important_words("Fundað var í þjóðaröryggisráði í dag."))
+        self.assertEqual(['íhaldsflokkur', 'þingmaður', 'líkur', 'bæta', 'mikill', 'mikla'], important_words("Miklar líkur eru á að Íhaldsflokkurinn bæti við sig þingmönnum."))
+
+    def test_need_to_fix_important_words(self):
+        self.assertEqual(['Tímamótasigur', 'Boris'], important_words("Tímamótasigur Boris."))
+        self.assertEqual(['sameining', 'fjölmiðlamarkaður', 'stó','vænd', 'stór', 'væna', 'fjölmiðlamarka'], important_words("Stór sameining er í vændum á fjölmiðlamarkaði."))
+
     def test_similar(self):
         self.assertSameWords(["Baldur", "Konni", "sýning"], important_words("Baldur og Konni með sýningu"))
         self.assertSameWords(["Baldur", "Konni", "sýning"], important_words("", "Baldur og Konni með sýningu"))

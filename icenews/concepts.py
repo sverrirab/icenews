@@ -17,71 +17,17 @@ _UNCLASSIFIED_NAME = 2.5
 _NORMAL_WEIGHT = 0.5
 _KVKHK_WEIGHT = 0.75
 _NUMBER_WEIGHT = 1.5
+_URL_WEIGHT = 2.0
 _DATE_WEIGHT = 3.0
 _TITLE_WEIGHT = 3.0
 _LOCATION_WEIGHT = 4.0
 _ENTITY_WEIGHT = 5.0
 
-_STOP_CONCEPTS = {
-    'að',
-    'af',
-    'ef',
-    'eftir',
-    'eiga',
-    'enn',
-    'eð',
-    'far',
-    'fara',
-    'fer',
-    'frá',
-    'fyrir',
-    'fá',
-    'get',
-    'geta',
-    'haf',
-    'hafa',
-    'hefja',
-    'hjá',
-    'hér',
-    'húnn',
-    'koma',
-    'maður',
-    'með',
-    'nú',
-    'og',
-    'segja',
-    'sem',
-    'sig',
-    'sjá',
-    'sjár',
-    'sé',
-    'tak',
-    'taka',
-    'til',
-    'um',
-    'upp',
-    'var',
-    'vegna',
-    'ver',
-    'vera',
-    'verða',
-    'verður',
-    'við',
-    'viður',
-    'á',
-    'ánn',
-    'ár',
-    'ær',
-    'í',
-    'úr',
-    'út',
-    'þannig',
-    'þar',
-    'þegar',
-    'þetta',
-    'því',
-    'þá',
-    'þær',
+_IGNORED_CONCEPTS = {
+    "sem/so/alm/",
+    "var/lo/alm",
+    "vera/so/alm",
+    "hafa/so/alm",
 }
 
 
@@ -100,18 +46,48 @@ def simplify_val(vals):
     :return:
     """
     result = {}
+    suspected_small_word = False
+    lo_or_no = False
+    abbreviation = None
+    ignored_concept = False
+    if _VERBOSE > 2:
+        print("vals:", repr(vals))
     for val in vals:
         unique = "{}/{}".format(val.ordfl, val.fl)
+        full = "{}/{}".format(val.stofn, unique)
+        if _VERBOSE > 2:
+            print("full:", full)
+        if full in _IGNORED_CONCEPTS:
+            if _VERBOSE > 2:
+                print("This is on the ignored list!")
+            ignored_concept = True
+            continue
         if unique in result:
             if _VERBOSE > 2:
                 print("simplify_val - ignoring:", val)
             continue
-        if val.ordfl in ["fs", "fn", "uh", "pfn", "st"]:
+        if val.ordfl in ["fs", "ao", "st", "uh", "nhm", "fn", "pfn", "abfn"]:
+            if _VERBOSE > 2:
+                print("simplify_val - type:", val.ordfl, " ignoring:", val)
+            suspected_small_word = True
             continue
-        elif val.stofn in _STOP_CONCEPTS:
+        if val.fl == "skst":
+            abbreviation = val
             continue
+        if val.ordfl in ["lo", "no"]:
+            lo_or_no = True
         result[unique] = val
 
+    if ignored_concept or (suspected_small_word and not lo_or_no):
+        if _VERBOSE > 1:
+            print("simplify_val - skipping:", result.values())
+        return {}
+    if abbreviation is not None:
+        if _VERBOSE > 1:
+            print("simplify_val - abbreviation:", abbreviation)
+        return [abbreviation]
+    if _VERBOSE > 1:
+        print("simplify_val - result:", result.values(), "out of previous", len(vals))
     return result.values()
 
 
@@ -145,25 +121,30 @@ class Concepts(object):
             if _VERBOSE > 1:
                 print("Parsing sentence:", sent)
 
+            first_token_in_sentence = True
             unclassified_names = []
-
             for t in tokenize(sent):
                 add_unclassified_name = False
                 if _VERBOSE > 2:
                     print("Parsing token:", t)
-                if t.kind > TOK.UNKNOWN:
-                    # ignoring end/start line/paragraph etc
+                if t.kind in [TOK.S_BEGIN, TOK.P_BEGIN]:
+                    first_token_in_sentence = True
+                elif t.kind >= TOK.P_BEGIN:
                     pass
                 elif t.kind == TOK.PUNCTUATION:
                     pass
-                elif t.kind in [TOK.DATE, TOK.YEAR, TOK.TIME]:
+                elif t.kind in [TOK.DATE, TOK.YEAR, TOK.TIME, TOK.DATEABS, TOK.DATEREL, TOK.TIMESTAMPABS, TOK.TIMESTAMPREL]:
                     if _VERBOSE > 1:
                         print(_INDENT, "DATE:", t)
                     self.add(t.txt, _DATE_WEIGHT)
-                elif t.kind in [TOK.NUMBER, TOK.ORDINAL, TOK.AMOUNT, TOK.PERCENT]:
+                elif t.kind in [TOK.NUMBER, TOK.ORDINAL, TOK.AMOUNT, TOK.PERCENT, TOK.MEASUREMENT]:
                     if _VERBOSE > 1:
                         print(_INDENT, "NUMBER:", t)
                     self.add(t.txt, _NUMBER_WEIGHT)
+                elif t.kind in [TOK.URL, 24]:
+                    if _VERBOSE > 1:
+                        print(_INDENT, "URL:", t)
+                    self.add(t.txt.lower(), _URL_WEIGHT)
                 elif t.kind == TOK.PERSON:
                     if _VERBOSE > 1:
                         print(_INDENT, "PERSON:", t)
@@ -180,10 +161,17 @@ class Concepts(object):
                                 print(_INDENT, "UNCLASSIFIED:", t.txt)
                             self.add(t.txt, _UNCLASSIFIED_WEIGHT)
                     else:
-                        self._add_token_concepts(t)
+                        if first_token_in_sentence and t.txt in {"Á", "Í"}:
+                            # Í or Á in the beginning of sentence.
+                            pass
+                        else:
+                            self._add_token_concepts(t)
                 else:
                     if _VERBOSE > -1:
-                        print(_INDENT, "UNHANDLED:", t)
+                        print(_INDENT, "IGNORING:", t)
+
+                if t.kind < TOK.P_BEGIN:
+                    first_token_in_sentence = False
 
                 if add_unclassified_name:
                     unclassified_names.append(t.txt)
@@ -217,9 +205,17 @@ class Concepts(object):
             return
 
         for val in simplified:
-            stofn = remove_hyphen(val.stofn)
+            if t.txt.count("-") != val.stofn.count("-"):
+                # Prenvent removal of hyhpens e.g. NBA-Deildin
+                stofn = remove_hyphen(val.stofn)
+            else:
+                stofn = val.stofn
+
             if val.fl == "lönd":
                 weight = _LOCATION_WEIGHT
+            elif val.fl == "skst":
+                stofn = val.ordmynd
+                weight = _ENTITY_WEIGHT
             elif is_name(stofn):
                 weight = _TITLE_WEIGHT
             elif val.ordfl in ["kk", "hk", "kvk"]:
