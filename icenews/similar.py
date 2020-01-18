@@ -1,10 +1,7 @@
 # -*- encoding: utf-8 -*-
 from .concepts import Concepts
 
-_TOO_FREQUENT_NAMES = {
-    "Íslendingur",
-    "Ísland",
-}
+_TOO_FREQUENT_NAMES = {"Íslendingur", "Ísland"}
 _DEBUG = False
 
 
@@ -125,13 +122,19 @@ def similar_articles(a, b):
         return True
 
     # Most of the names are matching.
-    if non_matching_names <= (unique_names // 4) and matching_names >= max(2, unique_names // 2):
+    if non_matching_names <= (unique_names // 4) and matching_names >= max(
+        2, unique_names // 2
+    ):
         if _DEBUG:
             print("many matching names!")
         return True
 
     # Take into account all words/names
-    return _almost((weak_matches // 2) + strong_matches + matching_names + matching_words, unique_names + len(words), len(b))
+    return _almost(
+        (weak_matches // 2) + strong_matches + matching_names + matching_words,
+        unique_names + len(words),
+        len(b),
+    )
 
 
 def similar_article_wordlists(a, b):

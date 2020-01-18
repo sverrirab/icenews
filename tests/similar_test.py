@@ -88,93 +88,167 @@ class TestSimilar(unittest.TestCase):
         self.assertFalse(_almost(3, 12, 14))
 
     def test_matching(self):
-        #self.assertTrue(similar(important_words(TEXT_3), important_words(TEXT_4)))
+        # self.assertTrue(similar(important_words(TEXT_3), important_words(TEXT_4)))
         self.assertTrue(
-            similar(important_words(NEWS_A_DESCRIPTION, NEWS_A_TITLE),
-                    important_words(NEWS_B_DESCRIPTION, NEWS_B_TITLE)))
-        #self.assertTrue(similar(NEWS_3, NEWS_4))
+            similar(
+                important_words(NEWS_A_DESCRIPTION, NEWS_A_TITLE),
+                important_words(NEWS_B_DESCRIPTION, NEWS_B_TITLE),
+            )
+        )
+        # self.assertTrue(similar(NEWS_3, NEWS_4))
 
     def test_not_matching(self):
-        #self.assertFalse(similar(NEWS_1, NEWS_3))
-        #self.assertFalse(similar(NEWS_1, NEWS_6))
-        #self.assertFalse(similar(NEWS_1, NEWS_6))
+        # self.assertFalse(similar(NEWS_1, NEWS_3))
+        # self.assertFalse(similar(NEWS_1, NEWS_6))
+        # self.assertFalse(similar(NEWS_1, NEWS_6))
         pass
 
     def test_should_match_but_currently_dont(self):
-        #self.assertFalse(similar(NEWS_1, NEWS_2))
-        #self.assertFalse(similar(NEWS_5, NEWS_6))
+        # self.assertFalse(similar(NEWS_1, NEWS_2))
+        # self.assertFalse(similar(NEWS_5, NEWS_6))
         pass
 
     def test_important_words(self):
-        #self.assertEqual(["Trump"], important_words(NEWS_C_DESCRIPTION))
-        #self.assertEqual(["Trump"], important_words(NEWS_D_DESCRIPTION))
+        # self.assertEqual(["Trump"], important_words(NEWS_C_DESCRIPTION))
+        # self.assertEqual(["Trump"], important_words(NEWS_D_DESCRIPTION))
         pass
 
     def test_important_words_more(self):
-        self.assertEqual(['EFTA', 'ESB', 'Gangar', 'ganga', 'núinn', 'núa', 'gangur', 'göng'], important_words("Göngum úr EFTA og í ESB núna!"))
-        self.assertEqual(['NBA-deild', 'fyrirtaksáhugamál', 'fylgja'], important_words("Fylgjast með NBA-Deildinni er fyrirtaksáhugamál"))
-        self.assertEqual(['http://helst.is', 'www.helst.is', 'skoða'], important_words("Skoðaðu http://helst.is eða www.Helst.is."))
-        self.assertEqual(['samkomulag', 'ná', 'fela'], important_words("Samkomulag hefur náðst. Í samkomulaginu felst."))
-        self.assertEqual(['Ásta F. Flosadóttir', 'I', 'Höfðar', 'bóndi', 'óttast'], important_words("Ásta F. Flosadóttir bóndi á Höfða I óttast."))
-        self.assertEqual(['bók', 'svanafólk', 'nýútkominn', 'nýútkoma', 'heita', 'heitur'], important_words("Í nýútkominni bók sem heitir Svanafólkið."))
-        self.assertEqual(["gangur", "ganga"], important_words("Það er ekki neitt í gangi"))
-        self.assertEqual(["þegja", "heyra"], important_words("Þegar þú þegir þá heyrist ekkert"))
-        self.assertEqual(['þjóðaröryggisráð', 'dagur', 'funda'], important_words("Fundað var í þjóðaröryggisráði í dag."))
-        self.assertEqual(['íhaldsflokkur', 'þingmaður', 'líkur', 'bæta', 'mikill', 'mikla'], important_words("Miklar líkur eru á að Íhaldsflokkurinn bæti við sig þingmönnum."))
+        self.assertEqual(
+            ["EFTA", "ESB", "Gangar", "ganga", "núinn", "núa", "gangur", "göng"],
+            important_words("Göngum úr EFTA og í ESB núna!"),
+        )
+        self.assertEqual(
+            ["NBA-deild", "fyrirtaksáhugamál", "fylgja"],
+            important_words("Fylgjast með NBA-Deildinni er fyrirtaksáhugamál"),
+        )
+        self.assertEqual(
+            ["http://helst.is", "www.helst.is", "skoða"],
+            important_words("Skoðaðu http://helst.is eða www.Helst.is."),
+        )
+        self.assertEqual(
+            ["samkomulag", "ná", "fela"],
+            important_words("Samkomulag hefur náðst. Í samkomulaginu felst."),
+        )
+        self.assertEqual(
+            ["Ásta F. Flosadóttir", "I", "Höfðar", "bóndi", "óttast"],
+            important_words("Ásta F. Flosadóttir bóndi á Höfða I óttast."),
+        )
+        self.assertEqual(
+            ["bók", "svanafólk", "nýútkominn", "nýútkoma", "heita", "heitur"],
+            important_words("Í nýútkominni bók sem heitir Svanafólkið."),
+        )
+        self.assertEqual(
+            ["gangur", "ganga"], important_words("Það er ekki neitt í gangi")
+        )
+        self.assertEqual(
+            ["þegja", "heyra"], important_words("Þegar þú þegir þá heyrist ekkert")
+        )
+        self.assertEqual(
+            ["þjóðaröryggisráð", "dagur", "funda"],
+            important_words("Fundað var í þjóðaröryggisráði í dag."),
+        )
+        self.assertEqual(
+            ["íhaldsflokkur", "þingmaður", "líkur", "bæta", "mikill", "mikla"],
+            important_words(
+                "Miklar líkur eru á að Íhaldsflokkurinn bæti við sig þingmönnum."
+            ),
+        )
 
     def test_need_to_fix_important_words(self):
-        self.assertEqual(['Tímamótasigur', 'Boris'], important_words("Tímamótasigur Boris."))
-        self.assertEqual(['sameining', 'fjölmiðlamarkaður', 'stó','vænd', 'stór', 'væna', 'fjölmiðlamarka'], important_words("Stór sameining er í vændum á fjölmiðlamarkaði."))
+        self.assertEqual(
+            ["Tímamótasigur", "Boris"], important_words("Tímamótasigur Boris.")
+        )
+        self.assertEqual(
+            [
+                "sameining",
+                "fjölmiðlamarkaður",
+                "stó",
+                "vænd",
+                "stór",
+                "væna",
+                "fjölmiðlamarka",
+            ],
+            important_words("Stór sameining er í vændum á fjölmiðlamarkaði."),
+        )
 
     def test_similar(self):
-        self.assertSameWords(["Baldur", "Konni", "sýning"], important_words("Baldur og Konni með sýningu"))
-        self.assertSameWords(["Baldur", "Konni", "sýning"], important_words("", "Baldur og Konni með sýningu"))
-        self.assertSameWords(['Álrisi', 'hönd', 'vandi', 'vanda', 'vandur', 'venja'],
-                         important_words("Álrisi í vanda", "Vandi að höndum"))
-        self.assertSameWords(["einn", "tveir", "þrír"], important_words("Einn, tveir og þrír"))
+        self.assertSameWords(
+            ["Baldur", "Konni", "sýning"],
+            important_words("Baldur og Konni með sýningu"),
+        )
+        self.assertSameWords(
+            ["Baldur", "Konni", "sýning"],
+            important_words("", "Baldur og Konni með sýningu"),
+        )
+        self.assertSameWords(
+            ["Álrisi", "hönd", "vandi", "vanda", "vandur", "venja"],
+            important_words("Álrisi í vanda", "Vandi að höndum"),
+        )
+        self.assertSameWords(
+            ["einn", "tveir", "þrír"], important_words("Einn, tveir og þrír")
+        )
 
     def test_examples(self):
-        self.assertTrue(similar_article_wordlists(
-            "Ártúnsbrekka;Reykjavík;strætisvagn;reykur;vél;klukka;slökkvilið;höfuðborgarsvæði;tilkynna;skammur;skömmu",
-            "Ártúnsbrekka;strætisvagn;bilun;slökkvilið;höfuðborgarsvæði;klukka;eldur;valda;út;í morgun;semja;sem"
-        ))
-        self.assertTrue(similar_article_wordlists(
-            "Ögmundur;Steinar Skarphéðinn Jónsson;Ögmundur Kristinsson;Rússland;KSÍ;tengdafaðir;sena;blaðamannafundur;markvörður;gestur;höfuðstöðvar",
-            "Rússland;Heimir;Ögmundur;Heimir Hallgrímsson;Steinar;Ögmundur Kristinsson;Rúnar Alex Rúnarsson;Hannes;Frederik Schram;maður;spurning;til"
-        ))
+        self.assertTrue(
+            similar_article_wordlists(
+                "Ártúnsbrekka;Reykjavík;strætisvagn;reykur;vél;klukka;slökkvilið;höfuðborgarsvæði;tilkynna;skammur;skömmu",
+                "Ártúnsbrekka;strætisvagn;bilun;slökkvilið;höfuðborgarsvæði;klukka;eldur;valda;út;í morgun;semja;sem",
+            )
+        )
+        self.assertTrue(
+            similar_article_wordlists(
+                "Ögmundur;Steinar Skarphéðinn Jónsson;Ögmundur Kristinsson;Rússland;KSÍ;tengdafaðir;sena;blaðamannafundur;markvörður;gestur;höfuðstöðvar",
+                "Rússland;Heimir;Ögmundur;Heimir Hallgrímsson;Steinar;Ögmundur Kristinsson;Rúnar Alex Rúnarsson;Hannes;Frederik Schram;maður;spurning;til",
+            )
+        )
 
     def test_gray_area(self):
-        self.assertFalse(similar_article_wordlists(
-            "Bretland;Ratcliffe;Grímsstaðir;Jim Ratcliffe;The Sunday Times;Manchester United;ár;maður;21,1;milljarður;2.933;18;65;eign;ær;ríkur;eiga;auðjöfur;úttekt;eigna;króna;blað",
-            "Bretland;Ísland;Grímsstaðir;Fjöll;Hafralónsá;Þistilfjörður;Vopnafjörður;Sunday Times;ríkur;stóreignamaður;laxveiðijörð"
-        ))
-        self.assertFalse(similar_article_wordlists(
-            "Jón G. Snædal;Íslendingur;Alzheimertilraun;Alzheimer;Ísland;lykilhlutverk;hópur;þáttur;lyfjarannsókn;þáttaskil;barátta;lyf;sjúkdómur;yfirmaður;rannsókn;yfirlæknir;öldrunarsvið",
-            "Evrópusambandið;Ísland;Íslendingur;80%;á móti;orkutilskipun;könnun;þátttaka;meirihluti;tilskipun;sýn"
-        ))
+        self.assertFalse(
+            similar_article_wordlists(
+                "Bretland;Ratcliffe;Grímsstaðir;Jim Ratcliffe;The Sunday Times;Manchester United;ár;maður;21,1;milljarður;2.933;18;65;eign;ær;ríkur;eiga;auðjöfur;úttekt;eigna;króna;blað",
+                "Bretland;Ísland;Grímsstaðir;Fjöll;Hafralónsá;Þistilfjörður;Vopnafjörður;Sunday Times;ríkur;stóreignamaður;laxveiðijörð",
+            )
+        )
+        self.assertFalse(
+            similar_article_wordlists(
+                "Jón G. Snædal;Íslendingur;Alzheimertilraun;Alzheimer;Ísland;lykilhlutverk;hópur;þáttur;lyfjarannsókn;þáttaskil;barátta;lyf;sjúkdómur;yfirmaður;rannsókn;yfirlæknir;öldrunarsvið",
+                "Evrópusambandið;Ísland;Íslendingur;80%;á móti;orkutilskipun;könnun;þátttaka;meirihluti;tilskipun;sýn",
+            )
+        )
 
     def test_failure_examples(self):
-        self.assertFalse(similar_article_wordlists(
-            "Forvarnir;ferðaþjónusta;útsending;hjálp;samtak;starfsháttur;öryggismál;viðbragð;atburður;í dag;góður;óvæntur;upp;við;forvörn",
-            "vika;stór;vinna;pottur;karlmaður;fimmtugsaldur;haf;lottóvinningur;lukkupottur;enn;tvisvar;talandi;ástralskur;því"
-        ))
-        self.assertFalse(similar_article_wordlists(
-            "Ísland;Skarphéðinn Guðmundsson;Ari Ólafsson;Ísrael;Skarphéðinn;90;milljón;Ríkisútvarpið;Dagblaðið Vísir;Lissabon;Eurovisionævintýrið;Eurovision;króna;þátttaka",
-            "Malavi;Ísland;Malaví;Mangochi;fimm;sjúkrabíll;sendiráð;stjórnvald;sjúkrabifreið;hérað;líf"
-        ))
-        self.assertFalse(similar_article_wordlists(
-            "Suðurskautsland;117;Steve Plain;Everest;Vinon;dagur;ær;hár;fjallgöngumaður;toppur;sjö;eiga;fjall",
-            "Reykjanes;Langanes;Ísland;land;ær;dagur;vestanátt;úrkomuskil;kólna;af;eiga;áfram;fram;fjall;landa;smálægð;húnn;hugleiðing;veðurfræðingur;veðurstofa;kjölfar;úrkoma;enn;úr;suðvestur;norður"
-        ))
-        self.assertFalse(similar_article_wordlists(
-            "Berlín;Reykjavík;Ástarbrölt;Ástarbrölta;eð;rithöfundur;vestur;sonur;leikskóli;fútt;dagur;blað;kaffihús;borg;háttur;hugðarefni;stilla;ef;líf;ár;síða;borgaralegur;heimavinnandi;ýmist;upp;á milli;minna;mikill;snemma;heldri",
-            "Karl Sigurðsson;100;ár;dagur;því;sé;stó;skipstjóri;vélstjóri;afmæli;verður;hundrað"
-        ))
-        self.assertFalse(similar_article_wordlists(
-            "Evrópusambandið;Ísland;Íslendingur;80%;á móti;orkutilskipun;könnun;þátttaka;meirihluti;tilskipun;sýn",
-            "Tékkland;Íslendingur;Evrópumeistaramót;Ísland;Mikill;kraftlyftingavor;gullverðlaun;verðlaunapeningur;kraftlyfting;meðbyr;íþrótt"
-        ))
+        self.assertFalse(
+            similar_article_wordlists(
+                "Forvarnir;ferðaþjónusta;útsending;hjálp;samtak;starfsháttur;öryggismál;viðbragð;atburður;í dag;góður;óvæntur;upp;við;forvörn",
+                "vika;stór;vinna;pottur;karlmaður;fimmtugsaldur;haf;lottóvinningur;lukkupottur;enn;tvisvar;talandi;ástralskur;því",
+            )
+        )
+        self.assertFalse(
+            similar_article_wordlists(
+                "Ísland;Skarphéðinn Guðmundsson;Ari Ólafsson;Ísrael;Skarphéðinn;90;milljón;Ríkisútvarpið;Dagblaðið Vísir;Lissabon;Eurovisionævintýrið;Eurovision;króna;þátttaka",
+                "Malavi;Ísland;Malaví;Mangochi;fimm;sjúkrabíll;sendiráð;stjórnvald;sjúkrabifreið;hérað;líf",
+            )
+        )
+        self.assertFalse(
+            similar_article_wordlists(
+                "Suðurskautsland;117;Steve Plain;Everest;Vinon;dagur;ær;hár;fjallgöngumaður;toppur;sjö;eiga;fjall",
+                "Reykjanes;Langanes;Ísland;land;ær;dagur;vestanátt;úrkomuskil;kólna;af;eiga;áfram;fram;fjall;landa;smálægð;húnn;hugleiðing;veðurfræðingur;veðurstofa;kjölfar;úrkoma;enn;úr;suðvestur;norður",
+            )
+        )
+        self.assertFalse(
+            similar_article_wordlists(
+                "Berlín;Reykjavík;Ástarbrölt;Ástarbrölta;eð;rithöfundur;vestur;sonur;leikskóli;fútt;dagur;blað;kaffihús;borg;háttur;hugðarefni;stilla;ef;líf;ár;síða;borgaralegur;heimavinnandi;ýmist;upp;á milli;minna;mikill;snemma;heldri",
+                "Karl Sigurðsson;100;ár;dagur;því;sé;stó;skipstjóri;vélstjóri;afmæli;verður;hundrað",
+            )
+        )
+        self.assertFalse(
+            similar_article_wordlists(
+                "Evrópusambandið;Ísland;Íslendingur;80%;á móti;orkutilskipun;könnun;þátttaka;meirihluti;tilskipun;sýn",
+                "Tékkland;Íslendingur;Evrópumeistaramót;Ísland;Mikill;kraftlyftingavor;gullverðlaun;verðlaunapeningur;kraftlyfting;meðbyr;íþrótt",
+            )
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
