@@ -36,13 +36,7 @@ docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
 
 # Now with API documentation!
 
-After you start the service visit `/docs` for detailed documentation!
-
-```bash 
-docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
-``` 
-
-And the same request as above works...
+Visit [API Documentation](https://api.helst.is/docs) to read the documentation and try out the API.
 
 # Note on licensing
 
