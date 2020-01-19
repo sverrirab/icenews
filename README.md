@@ -34,6 +34,14 @@ If you prefer you can also load the prebuilt container and run locally:
 docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
 ``` 
 
+# Now with API documentation!
+
+After you start the service visit `/docs` for detailed documentation!
+
+```bash 
+docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
+``` 
+
 And the same request as above works...
 
 # Note on licensing

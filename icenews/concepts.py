@@ -23,12 +23,7 @@ _TITLE_WEIGHT = 3.0
 _LOCATION_WEIGHT = 4.0
 _ENTITY_WEIGHT = 5.0
 
-_IGNORED_CONCEPTS = {
-    "sem/so/alm/",
-    "var/lo/alm",
-    "vera/so/alm",
-    "hafa/so/alm",
-}
+_IGNORED_CONCEPTS = {"sem/so/alm/", "var/lo/alm", "vera/so/alm", "hafa/so/alm"}
 
 
 def get_lemma(token):
@@ -133,11 +128,25 @@ class Concepts(object):
                     pass
                 elif t.kind == TOK.PUNCTUATION:
                     pass
-                elif t.kind in [TOK.DATE, TOK.YEAR, TOK.TIME, TOK.DATEABS, TOK.DATEREL, TOK.TIMESTAMPABS, TOK.TIMESTAMPREL]:
+                elif t.kind in [
+                    TOK.DATE,
+                    TOK.YEAR,
+                    TOK.TIME,
+                    TOK.DATEABS,
+                    TOK.DATEREL,
+                    TOK.TIMESTAMPABS,
+                    TOK.TIMESTAMPREL,
+                ]:
                     if _VERBOSE > 1:
                         print(_INDENT, "DATE:", t)
                     self.add(t.txt, _DATE_WEIGHT)
-                elif t.kind in [TOK.NUMBER, TOK.ORDINAL, TOK.AMOUNT, TOK.PERCENT, TOK.MEASUREMENT]:
+                elif t.kind in [
+                    TOK.NUMBER,
+                    TOK.ORDINAL,
+                    TOK.AMOUNT,
+                    TOK.PERCENT,
+                    TOK.MEASUREMENT,
+                ]:
                     if _VERBOSE > 1:
                         print(_INDENT, "NUMBER:", t)
                     self.add(t.txt, _NUMBER_WEIGHT)
@@ -236,12 +245,16 @@ class Concepts(object):
     def count(self):
         self._count += 1
 
-    def important(self, max_count=_DEFAULT_MAX_WORDS, threshold=_DEFAULT_IMPORTANT_THRESHOLD):
+    def important(
+        self, max_count=_DEFAULT_MAX_WORDS, threshold=_DEFAULT_IMPORTANT_THRESHOLD
+    ):
         result = []
         total = sum(self._concepts.values())
         cap = total * threshold
         running = 0.0
-        for c in sorted(self._concepts, key=self._concepts.get, reverse=True)[:max_count]:
+        for c in sorted(self._concepts, key=self._concepts.get, reverse=True)[
+            :max_count
+        ]:
             w = self._concepts[c]
             if running > cap:
                 if len(result) > _MIN_WORD_COUNT:
@@ -250,7 +263,9 @@ class Concepts(object):
             result.append(c)
         return result
 
-    def report(self, max_count=_DEFAULT_MAX_WORDS, threshold=_DEFAULT_IMPORTANT_THRESHOLD):
+    def report(
+        self, max_count=_DEFAULT_MAX_WORDS, threshold=_DEFAULT_IMPORTANT_THRESHOLD
+    ):
         print("Concepts report for {} items:".format(self._count))
         print("Sum:", sum(self._concepts.values()))
         print("Len:", len(self._concepts))
