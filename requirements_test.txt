@@ -2,4 +2,3 @@ black==19.10b0
 flake8==3.7.9
 pytest==4.3.1
 requests==2.22.0
-tox==3.8.3

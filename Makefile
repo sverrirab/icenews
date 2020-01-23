@@ -1,7 +1,14 @@
 version := $(shell cat version.txt)
 full_name := sverrirab/icenews
 
-.PHONY: build push
+.PHONY: test lint build push
+
+lint:
+	black --check .
+	flake8 icenews test
+
+test: lint
+	pytest
 
 build:
 	docker build -t icenews --build-arg VERSION=$(version) .

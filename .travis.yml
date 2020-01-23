@@ -6,8 +6,6 @@ python:
 install:
   - pip install -r requirements.txt -r requirements_test.txt
 script:
-  - pytest
-  - flake8 icenews test
-  - black --check .
+  - make test
 matrix:
   fast_finish: true
