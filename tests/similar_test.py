@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 import unittest
 
 from icenews.similar import _almost, important_words, similar, similar_article_wordlists

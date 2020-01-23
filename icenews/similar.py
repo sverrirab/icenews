@@ -1,8 +1,16 @@
-# -*- encoding: utf-8 -*-
+import os
+import logging
+
 from .concepts import Concepts
 
+logger = logging.getLogger(__name__)
+
 _TOO_FREQUENT_NAMES = {"Íslendingur", "Ísland"}
-_DEBUG = False
+_VERBOSE = int(os.environ.get("ICENEWS_VERBOSE", "0"))
+
+
+def _output_log(*args):
+    logger.info(" S: " + " ".join([str(a) for a in args]))
 
 
 def _filter_weights(weights, limit_percent=50):
@@ -20,24 +28,28 @@ def _filter_weights(weights, limit_percent=50):
 
 def _debug_weights(weights):
     for text in sorted(weights, key=weights.get, reverse=True):
-        print("{}\t{}".format(weights[text], text))
+        _output_log("{}\t{}".format(weights[text], text))
     total = sum(weights.values())
-    print("sum total:", total)
-    print("most important: ", sorted(_filter_weights(weights)))
+    _output_log("sum total:", total)
+    _output_log("most important: ", sorted(_filter_weights(weights)))
 
 
 def important_words(text, title=None):
-    c = Concepts()
-    if title:
-        # Add multiplication factor?
-        c.extract(title)
-    c.extract(text)
-    return c.important()
+    try:
+        c = Concepts()
+        if title:
+            # Add multiplication factor?
+            c.extract(title)
+        c.extract(text)
+        return c.important()
+    except Exception as e:
+        _output_log(e)
+        raise
 
 
 def _almost(n, a, b):
-    if _DEBUG:
-        print("almost", n, a, b, n >= ((min(a, b) + 1) // 2))
+    if _VERBOSE > 1:
+        _output_log("almost", n, a, b, n >= ((min(a, b) + 1) // 2))
     return n >= ((min(a, b) + 1) // 2)
 
 
@@ -82,10 +94,10 @@ def similar_articles(a, b):
             names.update(w.split())
         else:
             words.add(w)
-    if _DEBUG:
-        print("names", names)
-        print("unique_names", unique_names)
-        print("words", words)
+    if _VERBOSE > 1:
+        _output_log("names", names)
+        _output_log("unique_names", unique_names)
+        _output_log("words", words)
 
     matching_names = 0
     non_matching_names = 0
@@ -108,25 +120,25 @@ def similar_articles(a, b):
                     strong_matches += 1
                 matching_words += 1
 
-    if _DEBUG:
-        print("matching_names", matching_names)
-        print("non_matching_names", non_matching_names)
-        print("matching_words", matching_words)
-        print("weak_matches", weak_matches)
-        print("strong_matches", strong_matches)
+    if _VERBOSE > 1:
+        _output_log("matching_names", matching_names)
+        _output_log("non_matching_names", non_matching_names)
+        _output_log("matching_words", matching_words)
+        _output_log("weak_matches", weak_matches)
+        _output_log("strong_matches", strong_matches)
 
     # If two of the five first words match - strong indication of a match (most important words first)
     if strong_matches > 2:
-        if _DEBUG:
-            print("many strong matches!")
+        if _VERBOSE > 1:
+            _output_log("many strong matches!")
         return True
 
     # Most of the names are matching.
     if non_matching_names <= (unique_names // 4) and matching_names >= max(
         2, unique_names // 2
     ):
-        if _DEBUG:
-            print("many matching names!")
+        if _VERBOSE > 1:
+            _output_log("many matching names!")
         return True
 
     # Take into account all words/names

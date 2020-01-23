@@ -1,19 +1,20 @@
 from os import path
 from setuptools import setup
 
-VERSION = "1.0.6"
 README = "README.md"
 REQUIREMENTS = "requirements.txt"
 PACKAGE_DATA = [README, "LICENSE"]
 
 here = path.abspath(path.dirname(__file__))
+with open(path.join(here, "version.txt"), encoding="utf-8") as f:
+    VERSION = f.read()
 with open(path.join(here, README), encoding="utf-8") as f:
     long_description = f.read()
 
 requires = []
 with open(path.join(here, REQUIREMENTS)) as f:
-    for l in f.readlines():
-        req = l.split("#")[0].strip()
+    for line in f.readlines():
+        req = line.split("#")[0].strip()
         if req:
             requires.append(req)
 
