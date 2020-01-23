@@ -1,32 +1,31 @@
-# -*- encoding: utf-8 -*-
 import unittest
 
 from icenews.similar import _almost, important_words, similar, similar_article_wordlists
 
 
 TEXT_1 = """
-Hlutabréf í bandaríska netverslunarfyrirtækinu Amazon féllu um 4% í dag eftir harða gagnrýni Donalds Trump forseta 
-Bandaríkjanna. Hann sagði Amazon borga bandarísku póstþjónustunni allt of lítið fyrir sendingar og boðaði Trump 
+Hlutabréf í bandaríska netverslunarfyrirtækinu Amazon féllu um 4% í dag eftir harða gagnrýni Donalds Trump forseta
+Bandaríkjanna. Hann sagði Amazon borga bandarísku póstþjónustunni allt of lítið fyrir sendingar og boðaði Trump
 breytingar á því án þess þó að tilgreina þær nánar.
 „Aðeins fávitar, eða eitthvað verra, trúa því að póstþjónustan hagnist á viðskiptum við Amazon,“ tísti Trump í dag.
-„Póstþjónustan tapar stórfé og þetta mun breytast.“ Hann sagði að á meðan önnur smásölufyrirtæki berðust í bökkum 
+„Póstþjónustan tapar stórfé og þetta mun breytast.“ Hann sagði að á meðan önnur smásölufyrirtæki berðust í bökkum
 þá keppti Amazon ekki á jafnréttisgrundvelli.
 """
 
 TEXT_2 = """
-Þreyta er komin í framhaldsskólakennara vegna stöðunnar í kjaraviðræðum þeirra við ríkið. Formaður Félags 
-framhaldsskólakennara segir það ekki í boði að stéttin sé samningslaus svo mánuðum skiptir án þess að gripið sé til 
+Þreyta er komin í framhaldsskólakennara vegna stöðunnar í kjaraviðræðum þeirra við ríkið. Formaður Félags
+framhaldsskólakennara segir það ekki í boði að stéttin sé samningslaus svo mánuðum skiptir án þess að gripið sé til
 aðgerða.
 """
 
 TEXT_3 = """
-Winnie Mandela, fyrrum eiginkona Nelsons Mandela, fyrrum forseta Suður Afríku, er látin, 81 árs að aldri. 
-Þetta staðfesti talskona Winnie Mandela í dag, en hún hafði lengi glímt við veikindi.  
+Winnie Mandela, fyrrum eiginkona Nelsons Mandela, fyrrum forseta Suður Afríku, er látin, 81 árs að aldri.
+Þetta staðfesti talskona Winnie Mandela í dag, en hún hafði lengi glímt við veikindi.
 Winnie var gift Nelson Mandela í 38 ár, en 27 af þeim sat Nelson í fangelsi.&nbsp;
 """
 
 TEXT_4 = """
-Hún var, líkt og eiginmaðurinn fyrrverandi, ötul baráttukona gegn aðskilnaði kynþátta í Suður Afríku og var handtekin 
+Hún var, líkt og eiginmaðurinn fyrrverandi, ötul baráttukona gegn aðskilnaði kynþátta í Suður Afríku og var handtekin
 árið 1969 fyrir að prenta og dreifa bæklingum þar sem aðskilnaðarstefnunni í Suður-Afríku var mótmælt.
 """
 

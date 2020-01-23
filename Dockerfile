@@ -1,6 +1,8 @@
 FROM python:3.7
 
-RUN pip install --no-cache-dir icenews>=1.0.6
+ARG VERSION
+
+RUN pip install --no-cache-dir icenews==$VERSION
 
 EXPOSE 5000
 
