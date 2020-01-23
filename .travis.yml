@@ -6,6 +6,8 @@ python:
 install:
   - pip install -r requirements.txt -r requirements_test.txt
 script:
-  - tox
+  - pytest
+  - flake8 icenews test
+  - black --check .
 matrix:
   fast_finish: true
