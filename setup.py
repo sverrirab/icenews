@@ -2,21 +2,26 @@ from os import path
 from setuptools import setup
 
 README = "README.md"
+VERSION_FILE = "version.txt"
 REQUIREMENTS = "requirements.txt"
-PACKAGE_DATA = [README, "LICENSE"]
+REQUIREMENTS_TEST = "requirements_test.txt"
 
 here = path.abspath(path.dirname(__file__))
-with open(path.join(here, "version.txt"), encoding="utf-8") as f:
+with open(path.join(here, VERSION_FILE), encoding="utf-8") as f:
     VERSION = f.read()
 with open(path.join(here, README), encoding="utf-8") as f:
     long_description = f.read()
 
-requires = []
-with open(path.join(here, REQUIREMENTS)) as f:
-    for line in f.readlines():
-        req = line.split("#")[0].strip()
-        if req:
-            requires.append(req)
+
+def get_requirements(filename):
+    requires = []
+    with open(path.join(here, filename)) as f:
+        for line in f.readlines():
+            req = line.split("#")[0].strip()
+            if req:
+                requires.append(req)
+    return requires
+
 
 setup(
     name="icenews",
@@ -30,9 +35,9 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=["icenews"],
-    package_data={"": PACKAGE_DATA},
     include_package_data=True,
-    install_requires=requires,
+    install_requires=get_requirements(REQUIREMENTS),
+    test_requires=get_requirements(REQUIREMENTS_TEST),
     scripts=[],
     classifiers=[
         "Development Status :: 3 - Alpha",
