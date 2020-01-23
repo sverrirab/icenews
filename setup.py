@@ -37,7 +37,7 @@ setup(
     packages=["icenews"],
     include_package_data=True,
     install_requires=get_requirements(REQUIREMENTS),
-    test_requires=get_requirements(REQUIREMENTS_TEST),
+    tests_require=get_requirements(REQUIREMENTS_TEST),
     scripts=[],
     classifiers=[
         "Development Status :: 3 - Alpha",

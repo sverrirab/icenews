@@ -1,14 +1,11 @@
-dist: xenial
 language: python
-jobs:
-  include:
-    - python: '3.6'
-    - python: '3.7'
-    - python: '3.8'
-    - python: pypy3.5-5.10.1
-    - python: nightly
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
 install:
   - pip install -r requirements.txt -r requirements_test.txt
-script: pytest
+script:
+  - tox
 matrix:
   fast_finish: true
