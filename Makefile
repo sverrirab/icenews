@@ -10,6 +10,10 @@ lint:
 test: lint
 	pytest
 
+pypi:
+	python setup.py bdist_wheel
+	twine upload dist/icenews-$(version)-py3-none-any.whl
+
 build:
 	docker build -t icenews --build-arg VERSION=$(version) .
 
