@@ -87,6 +87,18 @@ class TestApi(unittest.TestCase):
             self.api_detect_language("I would have called Friðhildur earlier."),
         )
 
+    def api_edit_distance(self, a: str, b: str) -> int:
+        response = self.client.post("/v1/edit_distance", json={"a": a, "b": b},)
+        self.assertEqual(200, response.status_code)
+        result = response.json()
+        return result["edit_distance"]
+
+    def test_edit_distance_ok(self):
+        self.assertEqual(0, self.api_edit_distance("Halló", "Halló"))
+        self.assertEqual(1, self.api_edit_distance("Hallóx", "Halló"))
+        self.assertEqual(1, self.api_edit_distance("Halló", "Hallóx"))
+        self.assertEqual(11, self.api_edit_distance("Halló", "Hafnarfjörður"))
+
 
 if __name__ == "__main__":
     unittest.main()
