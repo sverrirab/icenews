@@ -11,11 +11,11 @@ _MAX_LENGTH = 2000
 logger = logging.getLogger(__name__)
 
 
-class ParseOutput(BaseModel):
+class ImportantWordsResponse(BaseModel):
     important_words: List[str] = Field(..., description="List of lemmas")
 
 
-class ParseInput(BaseModel):
+class ImportantWordsRequest(BaseModel):
     input_string: str = Field(
         ...,
         description="Icelandic text for analysis.",
@@ -38,18 +38,18 @@ class ParseInputDeprecated(BaseModel):
 @app.post(
     "/v1/important_words",
     description="Find lemmas of important words",
-    response_model=ParseOutput,
+    response_model=ImportantWordsResponse,
 )
-def v1_important_words(*, data: ParseInput):
-    return ParseOutput(important_words=important_words(data.input_string))
+def v1_important_words(*, data: ImportantWordsRequest):
+    return ImportantWordsResponse(important_words=important_words(data.input_string))
 
 
 @app.post(
     "/v1/parse",
     description="Find lemmas of important words",
-    response_model=ParseOutput,
+    response_model=ImportantWordsResponse,
     deprecated=True,
 )
 def v1_parse(*, data: ParseInputDeprecated):
     logger.info(f"parse: {repr(data.input_string)}")
-    return ParseOutput(important_words=important_words(data.input_string))
+    return ImportantWordsResponse(important_words=important_words(data.input_string))
