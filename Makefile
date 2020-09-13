@@ -17,7 +17,7 @@ pypi:
 	twine upload dist/icenews-$(version)-py3-none-any.whl
 
 build:
-	docker build -t icenews --build-arg VERSION=$(version) .
+	docker build --no-cache -t icenews --build-arg VERSION=$(version) .
 
 push:
 	docker tag icenews $(full_name):$(version)

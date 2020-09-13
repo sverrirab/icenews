@@ -1,5 +1,4 @@
 *.egg-info
-.git
-.venv
+.*
 build
 dist
