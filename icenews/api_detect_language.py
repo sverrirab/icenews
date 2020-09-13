@@ -37,5 +37,7 @@ def v1_detect_language(*, data: DetectLanguageRequest):
         _, language, _, _ = lang1
         return DetectLanguageResponse(language=language, reliable=is_reliable)
     except pycld2.error:
-        logger.error(f'Problem detecting language in: {repr(data.input_string)}')
-        raise HTTPException(status_code=400, detail='Failed to detect language in input')
+        logger.error(f"Problem detecting language in: {repr(data.input_string)}")
+        raise HTTPException(
+            status_code=400, detail="Failed to detect language in input"
+        )
