@@ -16,10 +16,16 @@ class EditDistanceResponse(BaseModel):
 
 class EditDistanceRequest(BaseModel):
     a: str = Field(
-        ..., description="Icelandic text A.", min_length=1, max_length=_MAX_LENGTH,
+        ...,
+        description="Icelandic text A.",
+        min_length=1,
+        max_length=_MAX_LENGTH,
     )
     b: str = Field(
-        ..., description="Icelandic text B.", min_length=1, max_length=_MAX_LENGTH,
+        ...,
+        description="Icelandic text B.",
+        min_length=1,
+        max_length=_MAX_LENGTH,
     )
 
 
