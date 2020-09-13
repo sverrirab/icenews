@@ -3,11 +3,13 @@ full_name := sverrirab/icenews
 
 .PHONY: test lint build push
 
+all: lint test build
+
 lint:
 	black --check .
-	flake8 icenews test
+	flake8 icenews tests
 
-test: lint
+test:
 	pytest
 
 pypi:

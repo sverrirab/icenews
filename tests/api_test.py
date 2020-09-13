@@ -71,7 +71,8 @@ class TestApi(unittest.TestCase):
 
     def api_detect_language(self, input_string: str) -> Tuple[str, bool]:
         response = self.client.post(
-            "/v1/detect_language", json={"input_string": input_string},
+            "/v1/detect_language",
+            json={"input_string": input_string},
         )
         self.assertEqual(200, response.status_code)
         result = response.json()
@@ -88,7 +89,10 @@ class TestApi(unittest.TestCase):
         )
 
     def api_edit_distance(self, a: str, b: str) -> int:
-        response = self.client.post("/v1/edit_distance", json={"a": a, "b": b},)
+        response = self.client.post(
+            "/v1/edit_distance",
+            json={"a": a, "b": b},
+        )
         self.assertEqual(200, response.status_code)
         result = response.json()
         return result["edit_distance"]

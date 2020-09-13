@@ -1,6 +1,7 @@
 import logging
 import pycld2
 
+from fastapi import HTTPException
 from pydantic import BaseModel, Field
 
 from .server import app
@@ -30,7 +31,13 @@ class DetectLanguageRequest(BaseModel):
     response_model=DetectLanguageResponse,
 )
 def v1_detect_language(*, data: DetectLanguageRequest):
-    is_reliable, _, details = pycld2.detect(data.input_string)
-    lang1, _, _ = details
-    _, language, _, _ = lang1
-    return DetectLanguageResponse(language=language, reliable=is_reliable)
+    try:
+        is_reliable, _, details = pycld2.detect(data.input_string)
+        lang1, _, _ = details
+        _, language, _, _ = lang1
+        return DetectLanguageResponse(language=language, reliable=is_reliable)
+    except pycld2.error:
+        logger.error(f"Problem detecting language in: {repr(data.input_string)}")
+        raise HTTPException(
+            status_code=400, detail="Failed to detect language in input"
+        )

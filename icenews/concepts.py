@@ -32,7 +32,7 @@ _IGNORED_CONCEPTS = {"sem/so/alm/", "var/lo/alm", "vera/so/alm", "hafa/so/alm"}
 
 
 def _output_log(*args):
-    logger.info(" C: " + " ".join([str(a) for a in args]))
+    logger.warning(" C: " + " ".join([str(a) for a in args]))
 
 
 def get_lemma(token):
@@ -161,7 +161,7 @@ class Concepts(object):
                     if _VERBOSE > 1:
                         _output_log(_INDENT, "NUMBER:", t)
                     self.add(t.txt, _NUMBER_WEIGHT)
-                elif t.kind in [TOK.URL, 24]:
+                elif t.kind in [TOK.URL, TOK.EMAIL, TOK.DOMAIN]:
                     if _VERBOSE > 1:
                         _output_log(_INDENT, "URL:", t)
                     self.add(t.txt.lower(), _URL_WEIGHT)
@@ -169,6 +169,10 @@ class Concepts(object):
                     if _VERBOSE > 1:
                         _output_log(_INDENT, "PERSON:", t)
                     self.add(t.val[0].name, _ENTITY_WEIGHT)
+                elif t.kind in [TOK.COMPANY, TOK.ENTITY]:
+                    if _VERBOSE > 1:
+                        _output_log(_INDENT, "ENTITY:", t)
+                    self.add(t.txt, _ENTITY_WEIGHT)
                 elif t.kind == TOK.WORD:
                     if _VERBOSE > 1:
                         _output_log(_INDENT, "WORD:", t.txt)
