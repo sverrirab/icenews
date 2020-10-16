@@ -2,5 +2,5 @@ fastapi==0.61.1
 nltk==3.5
 pycld2==0.41
 pydantic==1.6.1
-reynir==2.5.0
-uvicorn==0.11.8
+reynir==2.7.0
+uvicorn==0.12.1

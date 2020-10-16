@@ -38,8 +38,6 @@ docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
 
 Visit [API Documentation](https://api.helst.is/docs) to read the documentation and try out the API.
 
-# Note on licensing
+# License
 
-This project is released under the [Apache License](./LICENSE) because
-that is compatible with all the other licenses for libraries it depends
-on.  They are as time of writing: Public Domain, MIT, BSD, BSD-3 and GPLv3. 
+This project is released under the [Apache](./LICENSE) open source license.

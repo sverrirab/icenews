@@ -41,7 +41,7 @@ class TestImportant(unittest.TestCase):
 
     def test_names(self):
         self.assertAllIn(
-            ["Winnie Mandela", "lát", "látinn", "láta"], important_words(NEWS_4)
+            ["Winnie", "Mandeli", "lát", "látinn", "láta"], important_words(NEWS_4)
         )
         self.assertAllIn(
             ["Google Inc.", "Gunnar J.", "vinna"],
