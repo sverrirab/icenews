@@ -118,7 +118,7 @@ class TestSimilar(unittest.TestCase):
             important_words("Göngum úr EFTA og í ESB núna!"),
         )
         self.assertEqual(
-            ["NBA-deild", "fyrirtaksáhugamál", "fylgja"],
+            ["NBA-Deild", "fyrirtaksáhugamál", "fylgja"],
             important_words("Fylgjast með NBA-Deildinni er fyrirtaksáhugamál"),
         )
         self.assertEqual(
