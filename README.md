@@ -36,7 +36,7 @@ docker run -d -p 5000:5000 --rm --name icenews sverrirab/icenews
 
 # Now with API documentation!
 
-Visit [API Documentation](https://api.helst.is/docs) to read the documentation and try out the API.
+If you run the server locally you can view the documentation locally by visiting `http://localhost:5000/docs` - You can view [the OpenAPI specification here](./docs/openapi.json).
 
 # License
 
