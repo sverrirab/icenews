@@ -191,8 +191,13 @@ class Concepts(object):
                         else:
                             self._add_token_concepts(t)
                 else:
-                    if _VERBOSE > -1:
-                        _output_log(_INDENT, "IGNORING:", t)
+                    if t.kind != TOK.UNKNOWN:
+                        if _VERBOSE > 1:
+                            _output_log(_INDENT, "ARBITRARY:", t.kind, t.txt)
+                        self.add(t.txt, _NORMAL_WEIGHT)
+                    else:
+                        if _VERBOSE > -1:
+                            _output_log(_INDENT, "IGNORING:", t)
 
                 if t.kind < TOK.P_BEGIN:
                     first_token_in_sentence = False
