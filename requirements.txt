@@ -1,5 +1,5 @@
 fastapi==0.61.1
-nltk==3.5
+nltk==3.6.6
 pycld2==0.41
 pydantic==1.6.2
 reynir==2.7.0
